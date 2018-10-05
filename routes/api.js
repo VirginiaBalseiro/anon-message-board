@@ -31,7 +31,8 @@ module.exports = function (app) {
     
     
   app.route('/api/replies/:board')
+    .get(ReplyHandler.getReplies)
     .post(ReplyHandler.addReply)
-  
+    
 
 };

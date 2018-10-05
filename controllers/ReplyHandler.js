@@ -4,19 +4,20 @@ var url = process.env.DB;
 
 const ReplyHandler = {
 
-//   getThreads: function(req, res){
-//      var board = req.params.board ? req.params.board : '';
-//      mongo.connect(url, function(err, db) {
-//           var collection = db.collection(board);
-//          collection.find({}).toArray(function(err, docs){
-//            res.json(docs)
-//       });
+  getReplies: function(req, res){
+     var board = req.params.board ? req.params.board : '';
+     mongo.connect(url, function(err, db) {
+          var collection = db.collection(board);
+         collection.find({_id: new ObjectId(req.query.thread_id)}).toArray(function(err, docs){
+           //console.log(docs[0])
+           res.json(docs[0])
+      });
         
-//    })
-//      },
+   })
+     },
   
    addReply: function(req, res){
-     console.log(req)
+     //console.log(req)
      var board = req.params.board ? req.params.board : '';
      var thread_id = req.body.thread_id;
      console.log(thread_id)
