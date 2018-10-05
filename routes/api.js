@@ -24,7 +24,7 @@ module.exports = function (app) {
   app.route('/api/threads/:board')
     .get(ThreadHandler.getThreads)
     .post(ThreadHandler.makeThread)
-
+    .delete(ThreadHandler.deleteThread)
     
     
     
@@ -33,6 +33,6 @@ module.exports = function (app) {
   app.route('/api/replies/:board')
     .get(ReplyHandler.getReplies)
     .post(ReplyHandler.addReply)
-    
+    .delete(ReplyHandler.deleteReply)
 
 };

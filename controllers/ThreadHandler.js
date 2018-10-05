@@ -33,6 +33,25 @@ const ThreadHandler = {
     })
      },
   
- }
+  deleteThread: function(req, res) {
+    var board = req.params.board;
+    mongo.connect(url, function(err, db) {
+     var collection = db.collection(board);
+      collection.findAndModify(
+        {
+          _id: new ObjectId(req.body.thread_id),
+          delete_password: req.body.delete_password
+        },
+        [],
+        {},
+        {remove: true, new: false},
+        function(err,doc){
+         doc.value ? res.send('success') : res.send('incorrect password')
+         }
+        )}
+        
+    );
+  }
+}
 
 module.exports = ThreadHandler;
