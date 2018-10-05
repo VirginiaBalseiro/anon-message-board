@@ -13,6 +13,7 @@ var mongo = require('mongodb').MongoCliente;
 var ObjectID = require('mongodb').ObjectID;
 var url = process.env.DB;
 var ThreadHandler = require('../controllers/ThreadHandler.js');
+var ReplyHandler = require('../controllers/ReplyHandler.js');
 
 module.exports = function (app) {
   //I can POST a thread to a specific message board by passing form data text and delete_password to /api/threads/{board}.
@@ -29,7 +30,8 @@ module.exports = function (app) {
     
     
     
-  app.route('/api/replies/:board');
+  app.route('/api/replies/:board')
+    .post(ReplyHandler.addReply)
   
 
 };
