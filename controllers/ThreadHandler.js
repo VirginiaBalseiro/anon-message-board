@@ -8,7 +8,16 @@ const ThreadHandler = {
      var board = req.params.board ? req.params.board : '';
      mongo.connect(url, function(err, db) {
           var collection = db.collection(board);
-         collection.find({}).toArray(function(err, docs){
+         collection.find({})
+           .sort({bumped_on: -1})
+           .limit(10)
+           .toArray(function(err, docs){
+           docs.forEach(function(doc){
+             doc.replycount = doc.replies.length;
+            if (doc.replies.length > 3) {
+              doc.replies = doc.replies.slice(-3)
+            } 
+           })
            res.json(docs)
       });
         
@@ -51,7 +60,24 @@ const ThreadHandler = {
         )}
         
     );
+  },
+  reportThread: function(req, res) {
+   var board = req.params.board;
+    mongo.connect(url, function(err, db) {
+      var collection = db.collection(board);
+      collection.findAndModify(
+        {
+          _id: new ObjectId(req.params.thread_id)
+        },
+        [],
+        {},
+        {$set: {reported: true}},
+        function(err, doc) {
+         res.send('report')
+        }
+      )}
+    )
   }
 }
-
+    
 module.exports = ThreadHandler;
