@@ -25,7 +25,7 @@ module.exports = function (app) {
     .get(ThreadHandler.getThreads)
     .post(ThreadHandler.makeThread)
     .delete(ThreadHandler.deleteThread)
-    
+    .put(ThreadHandler.reportThread)
     
     
     
@@ -34,5 +34,6 @@ module.exports = function (app) {
     .get(ReplyHandler.getReplies)
     .post(ReplyHandler.addReply)
     .delete(ReplyHandler.deleteReply)
+    .put(ReplyHandler.reportReply)
 
 };

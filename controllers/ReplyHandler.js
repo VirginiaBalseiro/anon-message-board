@@ -63,6 +63,24 @@ const ReplyHandler = {
         )}
         
     );
+  },
+    reportReply: function(req, res) {
+      //console.log(req)
+      //console.log(res)
+       var board = req.params.board;
+        mongo.connect(url, function(err, db) {
+          var collection = db.collection(board);
+            collection.findAndModify(
+              {
+                _id: new ObjectId(req.params.thread_id),
+                "replies._id": new ObjectId(req.body.reply_id)
+              },
+              [],
+              { $set: { "replies.$.reported": true } },
+              function(err, doc) {
+        });
+        });
+       res.send('reported')
   }
 
  }
