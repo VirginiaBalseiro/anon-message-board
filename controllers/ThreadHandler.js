@@ -73,7 +73,7 @@ const ThreadHandler = {
         {},
         {$set: {reported: true}},
         function(err, doc) {
-         res.send('report')
+         res.send('reported')
         }
       )}
     )
